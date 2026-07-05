@@ -78,6 +78,20 @@ const CATEGORIES = [
 let menuItems = [];
 let selectedFile = null;
 let activeFilter = 'all';
+const categoryOpenState = {}; // وضعیت باز/بسته‌بودن هر دسته در آکاردئون
+
+function toggleCategory(catId) {
+  categoryOpenState[catId] = !categoryOpenState[catId];
+  renderList();
+}
+
+// از پیش انتخاب‌کردن یک دسته‌بندی هنگام افزودن آیتم مستقیم از داخل آن بخش
+function startAddItemInCategory(catId) {
+  cancelEdit();
+  document.getElementById('category').value = catId;
+  document.getElementById('name').focus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 function catInfo(id) {
   return CATEGORIES.find(c => c.id === id) || { id, emoji: '☕', label: id };
@@ -280,9 +294,12 @@ function renderList() {
     return;
   }
 
-  const sections = catsToShow.map(cat => {
+  const sections = catsToShow.map((cat, idx) => {
     const catItems = menuItems.filter(i => i.category === cat.id);
-    if (catItems.length === 0) return '';
+    if (catItems.length === 0 && activeFilter === 'all') return '';
+
+    if (!(cat.id in categoryOpenState)) categoryOpenState[cat.id] = idx === 0;
+    const isOpen = activeFilter !== 'all' ? true : categoryOpenState[cat.id];
 
     const itemsHtml = catItems.map(item => `
       <div class="bg-zinc-900 p-5 rounded-3xl flex gap-4">
@@ -302,9 +319,15 @@ function renderList() {
     `).join('');
 
     return `
-      <div>
-        <h3 class="text-lg font-semibold mb-3 border-b border-zinc-800 pb-2">${cat.emoji} ${escapeHtml(cat.label)} <span class="text-zinc-500 text-sm">(${catItems.length})</span></h3>
-        <div class="space-y-4">${itemsHtml}</div>
+      <div class="bg-zinc-900/50 rounded-3xl overflow-hidden border border-zinc-800">
+        <button type="button" onclick="toggleCategory('${cat.id}')" class="w-full flex items-center justify-between p-5 text-right">
+          <span class="text-lg font-semibold flex items-center gap-2">
+            <i class="fa-solid fa-chevron-${isOpen ? 'down' : 'left'} text-zinc-500 text-sm"></i>
+            ${cat.emoji} ${escapeHtml(cat.label)} <span class="text-zinc-500 text-sm">(${catItems.length})</span>
+          </span>
+          <span onclick="event.stopPropagation(); startAddItemInCategory('${cat.id}')" class="text-sm bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-full">➕ افزودن آیتم</span>
+        </button>
+        ${isOpen ? `<div class="p-5 pt-0 space-y-4">${itemsHtml || `<div class="text-center text-zinc-500 py-4">آیتمی در این دسته نیست</div>`}</div>` : ''}
       </div>
     `;
   }).join('');
