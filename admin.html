@@ -9,49 +9,52 @@
 </head>
 <body class="bg-zinc-950 text-white">
 <div class="max-w-2xl mx-auto p-6">
-<div class="flex justify-between items-center mb-8">
-<h1 class="text-3xl font-bold">پنل مدیریت کافه باران</h1>
-<a href="index.html" class="text-amber-400 hover:underline">← منوی مشتری</a>
-</div>
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">پنل مدیریت کافه باران</h1>
+    <a href="index.html" class="text-amber-400 hover:underline">← منوی مشتری</a>
+  </div>
 
-<div class="bg-zinc-900 rounded-3xl p-6 mb-8">
-<label class="block mb-2">GitHub Token</label>
-<input type="password" id="githubToken" placeholder="ghp_..." class="w-full bg-zinc-800 p-4 rounded-2xl">
-<p class="text-xs text-zinc-500 mt-2">⚠️ فقط در مرورگر شما ذخیره می‌شود. لینک این صفحه را به اشتراک نگذارید.</p>
-</div>
+  <div class="bg-zinc-900 rounded-3xl p-6 mb-8">
+    <label class="block mb-2">GitHub Token</label>
+    <input type="password" id="githubToken" placeholder="ghp_..." class="w-full bg-zinc-800 p-4 rounded-2xl">
+    <p class="text-xs text-zinc-500 mt-2">⚠️ فقط در مرورگر شما ذخیره می‌شود. لینک این صفحه را به اشتراک نگذارید.</p>
+  </div>
 
-<!-- فیلتر دسته -->
-<div class="mb-6 flex flex-wrap gap-2" id="filterBar"></div>
+  <!-- پیام‌های خطا / دیباگ -->
+  <div id="loadError" class="hidden bg-red-950 border border-red-700 text-red-300 text-sm p-4 rounded-2xl mb-6"></div>
 
-<!-- فرم افزودن/ویرایش -->
-<div class="bg-zinc-900 rounded-3xl p-6 mb-10">
-<h2 class="text-xl mb-6" id="formTitle">افزودن آیتم جدید</h2>
-<form id="itemForm">
-<input type="hidden" id="editId">
-<input id="name" placeholder="نام آیتم" class="w-full bg-zinc-800 p-4 rounded-2xl mb-4" required>
-<div class="grid grid-cols-2 gap-4 mb-4">
-<input id="price" placeholder="قیمت (تومان یا -)" class="bg-zinc-800 p-4 rounded-2xl" required>
-<select id="category" class="bg-zinc-800 p-4 rounded-2xl" required></select>
-</div>
-<input id="desc" placeholder="توضیحات (اختیاری)" class="w-full bg-zinc-800 p-4 rounded-2xl mb-4">
-<div class="mb-6">
-<label class="block text-sm mb-2">عکس آیتم (اختیاری)</label>
-<input type="file" id="imageFile" accept="image/*" class="block w-full text-sm text-zinc-300 file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:bg-amber-600 file:text-white">
-<div id="preview" class="hidden mt-4">
-<img id="previewImg" class="max-h-52 rounded-3xl">
-</div>
-</div>
-<div class="flex gap-3">
-<button type="submit" class="flex-1 bg-green-600 py-4 rounded-3xl font-medium">ذخیره</button>
-<button type="button" onclick="cancelEdit()" id="cancelBtn" class="hidden bg-zinc-700 px-6 rounded-3xl font-medium">انصراف</button>
-</div>
-</form>
-</div>
+  <!-- فیلتر دسته -->
+  <div class="mb-6 flex flex-wrap gap-2" id="filterBar"></div>
 
-<div id="status" class="text-center my-6"></div>
+  <!-- فرم افزودن/ویرایش -->
+  <div class="bg-zinc-900 rounded-3xl p-6 mb-10">
+    <h2 class="text-xl mb-6" id="formTitle">افزودن آیتم جدید</h2>
+    <form id="itemForm">
+      <input type="hidden" id="editId">
+      <input id="name" placeholder="نام آیتم" class="w-full bg-zinc-800 p-4 rounded-2xl mb-4" required>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <input id="price" placeholder="قیمت (تومان یا -)" class="bg-zinc-800 p-4 rounded-2xl" required>
+        <select id="category" class="bg-zinc-800 p-4 rounded-2xl" required></select>
+      </div>
+      <input id="desc" placeholder="توضیحات (اختیاری)" class="w-full bg-zinc-800 p-4 rounded-2xl mb-4">
+      <div class="mb-6">
+        <label class="block text-sm mb-2">عکس آیتم (اختیاری)</label>
+        <input type="file" id="imageFile" accept="image/*" class="block w-full text-sm text-zinc-300 file:mr-4 file:py-3 file:px-6 file:rounded-2xl file:bg-amber-600 file:text-white">
+        <div id="preview" class="hidden mt-4">
+          <img id="previewImg" class="max-h-52 rounded-3xl">
+        </div>
+      </div>
+      <div class="flex gap-3">
+        <button type="submit" class="flex-1 bg-green-600 py-4 rounded-3xl font-medium">ذخیره</button>
+        <button type="button" onclick="cancelEdit()" id="cancelBtn" class="hidden bg-zinc-700 px-6 rounded-3xl font-medium">انصراف</button>
+      </div>
+    </form>
+  </div>
 
-<h2 class="text-xl font-semibold mb-4">آیتم‌های فعلی (<span id="itemCount">0</span>)</h2>
-<div id="adminList" class="space-y-4"></div>
+  <div id="status" class="text-center my-6"></div>
+
+  <h2 class="text-xl font-semibold mb-4">آیتم‌های فعلی (<span id="itemCount">0</span>)</h2>
+  <div id="adminList" class="space-y-8"></div>
 </div>
 
 <script>
@@ -61,15 +64,15 @@ const REPO = "baran-new";
 // دسته‌بندی‌ها باید دقیقاً با index.html هماهنگ باشند
 const CATEGORIES = [
   { id: "hot-drinks", emoji: "☕", label: "نوشیدنی گرم" },
-  { id: "tea",         emoji: "🫖", label: "چای و دمنوش" },
-  { id: "ice-coffee",  emoji: "🧊", label: "آیس کافی" },
-  { id: "shake",       emoji: "🥤", label: "شیک" },
-  { id: "smoothie",    emoji: "🍹", label: "اسموتی" },
-  { id: "mojito",      emoji: "🍋", label: "موهیتو و لیموناد" },
-  { id: "cocktail",    emoji: "🍸", label: "ماکتیل" },
-  { id: "glass",       emoji: "🍨", label: "گلاسه و بستنی" },
-  { id: "cake",        emoji: "🍰", label: "کیک" },
-  { id: "food",        emoji: "🍕", label: "غذا" },
+  { id: "tea", emoji: "🫖", label: "چای و دمنوش" },
+  { id: "ice-coffee", emoji: "🧊", label: "آیس کافی" },
+  { id: "shake", emoji: "🥤", label: "شیک" },
+  { id: "smoothie", emoji: "🍹", label: "اسموتی" },
+  { id: "mojito", emoji: "🍋", label: "موهیتو و لیموناد" },
+  { id: "cocktail", emoji: "🍸", label: "ماکتیل" },
+  { id: "glass", emoji: "🍨", label: "گلاسه و بستنی" },
+  { id: "cake", emoji: "🍰", label: "کیک" },
+  { id: "food", emoji: "🍕", label: "غذا" },
 ];
 
 let menuItems = [];
@@ -90,6 +93,7 @@ function renderFilterBar() {
   bar.innerHTML = `<button onclick="setFilter('all')" class="px-4 py-2 rounded-full text-sm ${activeFilter==='all' ? 'bg-amber-600' : 'bg-zinc-800'}">همه</button>` +
     CATEGORIES.map(c => `<button onclick="setFilter('${c.id}')" class="px-4 py-2 rounded-full text-sm ${activeFilter===c.id ? 'bg-amber-600' : 'bg-zinc-800'}">${c.emoji} ${c.label}</button>`).join('');
 }
+
 function setFilter(id) {
   activeFilter = id;
   renderFilterBar();
@@ -118,8 +122,8 @@ document.getElementById('itemForm').addEventListener('submit', async (e) => {
 
   const editId = document.getElementById('editId').value;
   const categoryId = document.getElementById('category').value;
-
   let imagePath = null;
+
   if (editId) {
     const existing = menuItems.find(i => i.id == editId);
     if (existing) imagePath = existing.image || null;
@@ -132,11 +136,14 @@ document.getElementById('itemForm').addEventListener('submit', async (e) => {
     if (!uploaded) return status.innerHTML = `<span class="text-red-400">خطا در آپلود عکس</span>`;
   }
 
+  // همیشه قبل از ذخیره، آخرین نسخه را از گیت‌هاب بگیر تا رونویسی نشود
   try {
     const res = await fetch(`menu-data.json?t=${Date.now()}`);
-    menuItems = await res.json();
-    if (!Array.isArray(menuItems)) menuItems = [];
-  } catch (e) { menuItems = []; }
+    if (res.ok) {
+      menuItems = await res.json();
+      if (!Array.isArray(menuItems)) menuItems = [];
+    }
+  } catch (e) { /* اگر نشد، از آخرین لیست حافظه استفاده می‌شود */ }
 
   const newItem = {
     id: editId ? Number(editId) : Date.now(),
@@ -207,6 +214,10 @@ async function saveMenuData(token) {
       headers: { Authorization: `token ${token}`, "Content-Type": "application/json" },
       body: JSON.stringify({ message: "Update menu", content, sha })
     });
+    if (!putRes.ok) {
+      const errBody = await putRes.text();
+      console.error('saveMenuData failed:', putRes.status, errBody);
+    }
     return putRes.ok;
   } catch (err) {
     console.error(err);
@@ -214,15 +225,38 @@ async function saveMenuData(token) {
   }
 }
 
+// نمایش خطای بارگذاری به‌صورت واضح روی صفحه (به‌جای قورت‌دادن بی‌صدا)
+function showLoadError(message) {
+  const box = document.getElementById('loadError');
+  box.classList.remove('hidden');
+  box.innerHTML = `⚠️ ${message}`;
+}
+function hideLoadError() {
+  document.getElementById('loadError').classList.add('hidden');
+}
+
 function loadData() {
   fetch(`menu-data.json?t=${Date.now()}`)
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status} — فایل menu-data.json پیدا نشد یا در دسترس نیست`);
+      return res.json();
+    })
     .then(data => {
-      menuItems = Array.isArray(data) ? data : [];
+      if (!Array.isArray(data)) throw new Error('فرمت menu-data.json درست نیست (باید یک آرایه JSON باشد)');
+      menuItems = data;
+      hideLoadError();
       renderList();
     })
-    .catch(() => {
+    .catch((err) => {
+      console.error('loadData error:', err);
       menuItems = [];
+      // رایج‌ترین دلیل: صفحه با دابل‌کلیک (file://) باز شده. باید از یک سرور محلی
+      // یا از طریق GitHub Pages باز شود تا fetch() کار کند.
+      let hint = err.message;
+      if (location.protocol === 'file:') {
+        hint += '<br>احتمالاً صفحه را مستقیم (file://) باز کرده‌اید — این حالت به‌خاطر محدودیت CORS مرورگر کار نمی‌کند. صفحه را از طریق GitHub Pages یا یک سرور محلی (مثلاً VSCode Live Server) باز کنید.';
+      }
+      showLoadError(hint);
       renderList();
     });
 }
@@ -233,31 +267,49 @@ function escapeHtml(str) {
   }[m]));
 }
 
+// نمایش آیتم‌ها گروه‌بندی‌شده بر اساس دسته (مثل index.html)
 function renderList() {
   const container = document.getElementById('adminList');
-  const filtered = activeFilter === 'all' ? menuItems : menuItems.filter(i => i.category === activeFilter);
-  document.getElementById('itemCount').innerText = filtered.length;
 
-  container.innerHTML = filtered.map(item => {
-    const c = catInfo(item.category);
+  const catsToShow = activeFilter === 'all' ? CATEGORIES : CATEGORIES.filter(c => c.id === activeFilter);
+  const totalCount = activeFilter === 'all' ? menuItems.length : menuItems.filter(i => i.category === activeFilter).length;
+  document.getElementById('itemCount').innerText = totalCount;
+
+  if (menuItems.length === 0) {
+    container.innerHTML = `<div class="text-center text-zinc-500 py-8">هیچ آیتمی بارگذاری نشد.</div>`;
+    return;
+  }
+
+  const sections = catsToShow.map(cat => {
+    const catItems = menuItems.filter(i => i.category === cat.id);
+    if (catItems.length === 0) return '';
+
+    const itemsHtml = catItems.map(item => `
+      <div class="bg-zinc-900 p-5 rounded-3xl flex gap-4">
+        <div class="w-20 h-20 rounded-2xl overflow-hidden bg-zinc-800 flex-shrink-0">
+          ${item.image ? `<img src="${escapeHtml(item.image)}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-4xl">${cat.emoji}</div>`}
+        </div>
+        <div class="flex-1">
+          <div class="font-bold">${escapeHtml(item.name)}</div>
+          <div class="text-sm text-zinc-400">${escapeHtml(item.desc || '')}</div>
+          <div class="text-amber-400">${escapeHtml(item.price)}</div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <button onclick="editItem(${item.id})" class="text-blue-400">ویرایش</button>
+          <button onclick="deleteItem(${item.id})" class="text-red-400">حذف</button>
+        </div>
+      </div>
+    `).join('');
+
     return `
-    <div class="bg-zinc-900 p-5 rounded-3xl flex gap-4">
-      <div class="w-20 h-20 rounded-2xl overflow-hidden bg-zinc-800 flex-shrink-0">
-        ${item.image ? `<img src="${escapeHtml(item.image)}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-4xl">${c.emoji}</div>`}
+      <div>
+        <h3 class="text-lg font-semibold mb-3 border-b border-zinc-800 pb-2">${cat.emoji} ${escapeHtml(cat.label)} <span class="text-zinc-500 text-sm">(${catItems.length})</span></h3>
+        <div class="space-y-4">${itemsHtml}</div>
       </div>
-      <div class="flex-1">
-        <div class="font-bold">${escapeHtml(item.name)}</div>
-        <div class="text-sm text-zinc-400">${escapeHtml(item.desc || '')}</div>
-        <div class="text-amber-400">${escapeHtml(item.price)}</div>
-        <div class="text-xs text-zinc-500">${c.emoji} ${c.label}</div>
-      </div>
-      <div class="flex flex-col gap-2">
-        <button onclick="editItem(${item.id})" class="text-blue-400">ویرایش</button>
-        <button onclick="deleteItem(${item.id})" class="text-red-400">حذف</button>
-      </div>
-    </div>
-  `;
-  }).join('') || `<div class="text-center text-zinc-500 py-8">آیتمی در این دسته نیست</div>`;
+    `;
+  }).join('');
+
+  container.innerHTML = sections || `<div class="text-center text-zinc-500 py-8">آیتمی در این دسته نیست</div>`;
 }
 
 function editItem(id) {
